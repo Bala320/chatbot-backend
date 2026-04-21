@@ -1,5 +1,6 @@
 package com.server.chatbot.model;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
 
@@ -17,7 +18,9 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="conversations")
-public class Conversation {
+public class Conversation implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

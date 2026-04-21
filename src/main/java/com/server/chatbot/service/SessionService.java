@@ -31,6 +31,7 @@ public class SessionService {
     private final TokenService tokenService;
     private final ConversationRepository conversationRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final ConversationService conversationService;
 
     @Value("${app.cookies.secure:false}")
     private boolean secureCookies;
@@ -38,10 +39,12 @@ public class SessionService {
     public SessionService(
             TokenService tokenService,
             ConversationRepository conversationRepository,
-            RefreshTokenRepository refreshTokenRepository) {
+            RefreshTokenRepository refreshTokenRepository,
+            ConversationService conversationService) {
         this.tokenService = tokenService;
         this.conversationRepository = conversationRepository;
         this.refreshTokenRepository = refreshTokenRepository;
+        this.conversationService = conversationService;
     }
 
     public String createSession(HttpServletResponse response) {
@@ -138,5 +141,6 @@ public class SessionService {
         conversation.setExpiresAt(tokenService.refreshExpiryTime());
 
         conversationRepository.save(conversation);
+        conversationService.cacheConversation(conversation);
     }
 }
