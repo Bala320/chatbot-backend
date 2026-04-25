@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.server.chatbot.model.Conversation;
+import com.server.chatbot.model.Product;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
@@ -16,30 +17,124 @@ public class ChatService {
 
     private final ConversationService conversationService;
     private final OpenAIService openAIService;
+    private final ProductService productService;
+    private final PromptBuilder promptBuilder;
 
-    public ChatService(ConversationService conversationService, OpenAIService openAIService) {
+    public ChatService(ConversationService conversationService, OpenAIService openAIService, ProductService productService, PromptBuilder promptBuilder) {
         this.conversationService = conversationService;
         this.openAIService = openAIService;
+        this.productService = productService;
+        this.promptBuilder = promptBuilder;
+    }
+
+    private UserPreference merge(UserPreference oldPref, UserPreference newPref) {
+
+        if (oldPref == null) return newPref;
+        if (newPref == null) return oldPref;
+
+        if (newPref.getBudget() != null) {
+            oldPref.setBudget(newPref.getBudget());
+        }
+
+        if (newPref.getUseCase() != null) {
+            oldPref.setUseCase(newPref.getUseCase());
+        }
+
+        if (newPref.getBattery() != null) {
+            oldPref.setBattery(newPref.getBattery());
+        }
+
+        if (newPref.getPerformance() != null) {
+            oldPref.setPerformance(newPref.getPerformance());
+        }
+
+        return oldPref;
     }
 
     public String handleChat(String sessionId, String message) {
+
         validateMessage(message);
 
+        // 1. Load conversation
         Conversation conversation = conversationService.getConversation(sessionId);
         conversationService.addMessage(conversation, "user", message);
 
-        List<Map<String, String>> messages = conversation.getHistory().stream()
+        // 2. Get history
+        List<Map<String, String>> history = conversation.getHistory().stream()
                 .map(msg -> Map.of(
                         "role", msg.getRole(),
                         "content", msg.getContent()
                 ))
                 .toList();
 
-        String reply = openAIService.getChatResponse(messages);
+        String reply;
+
+        // ✅ ADD HERE (exact spot)
+        if (isGreeting(message)) {
+            reply = "Hey! 👋 Looking for a laptop today? Tell me your budget or use case like gaming, coding, etc.";
+
+            // save assistant response
+            conversationService.addMessage(conversation, "assistant", reply);
+            conversationService.saveConversation(conversation);
+
+            return reply; // 🔥 IMPORTANT: exit early
+        }
+
+        try {
+            // 🔥 3. Extract preferences (AI)
+            UserPreference newPref = openAIService.extractPreferences(message);
+
+            // 🔥 4. Load old preferences
+            UserPreference oldPref = conversation.getPreferences();
+
+            // 🔥 5. Merge
+            UserPreference mergedPref = merge(oldPref, newPref);
+
+            // 🔥 6. Filter products (Java)
+            List<Product> products = productService.search(mergedPref);
+
+             // ⚠️ Handle no results
+            if (products.isEmpty()) {
+                products = productService.getAllProducts()
+                        .stream()
+                        .limit(5)
+                        .toList();
+            }
+
+            // 🔥 ALWAYS build prompt
+            String prompt = promptBuilder.buildShopkeeperPrompt(
+                    history,
+                    mergedPref,
+                    products,
+                    message
+            );
+
+            // 🔥 ALWAYS call LLM
+            reply = openAIService.callLLM(prompt);
+
+            // 🔥 9. Save preferences
+            conversation.setPreferences(mergedPref);
+
+        } catch (Exception e) {
+            // fallback (very important)
+            reply = "Something went wrong. Can you rephrase your request?";
+            e.printStackTrace();
+        }
+
+        // 10. Save response
         conversationService.addMessage(conversation, "assistant", reply);
         conversationService.saveConversation(conversation);
 
         return reply;
+    }
+
+    private boolean isGreeting(String message) {
+        String msg = message.toLowerCase().trim();
+
+        return msg.equals("hi") ||
+            msg.equals("hello") ||
+            msg.equals("hey") ||
+            msg.equals("hi there");
     }
 
     public SseEmitter handleChatStream(String sessionId, String message) {

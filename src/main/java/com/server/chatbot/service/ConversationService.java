@@ -22,6 +22,7 @@ public class ConversationService {
     private final ConversationRepository conversationRepository;
     private final ConversationCacheService conversationCacheService;
     private final TokenService tokenService;
+    private UserPreference preferences;
 
     public ConversationService(
             ConversationRepository conversationRepository,

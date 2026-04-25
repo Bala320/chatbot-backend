@@ -27,6 +27,15 @@ public class SessionService {
 
     private static final String ACCESS_COOKIE_NAME = "op_access";
     private static final String REFRESH_COOKIE_NAME = "op_refresh";
+    private static final String SYSTEM_PROMPT = """
+        You are a helpful AI assistant.
+
+        Rules:
+        - Only answer based on partner data
+        - Be concise and clear
+        - If you don't know, say "I don't have that information"
+        - Do not hallucinate
+        """;
 
     private final TokenService tokenService;
     private final ConversationRepository conversationRepository;
@@ -125,15 +134,15 @@ public class SessionService {
 
     private void initializeConversation(String sessionId) {
         List<ChatMessage> history = new ArrayList<>();
-        history.add(new ChatMessage(
-                "system",
-                "You are a helpful chatbot restricted to partner data."
-        ));
-        history.add(new ChatMessage(
-                "system",
-                "Default partner data (no partners configured)"
-        ));
-
+        // history.add(new ChatMessage(
+        //         "system",
+        //         "You are a helpful chatbot restricted to partner data."
+        // ));
+        // history.add(new ChatMessage(
+        //         "system",
+        //         "Default partner data (no partners configured)"
+        // ));
+        history.add(new ChatMessage("system", SYSTEM_PROMPT));
         Conversation conversation = new Conversation();
         conversation.setSessionId(sessionId);
         conversation.setPageKey("default-page");

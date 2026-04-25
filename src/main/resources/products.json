@@ -1,0 +1,164 @@
+[
+  {
+    "id": 1,
+    "brand": "HP",
+    "title": "HP Pavilion 15",
+    "category": "Productivity",
+    "images": [
+      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1593642702909-dec73df255d7?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "specs": [
+      "15.6\" (39.62 cm), 1920 x 1080 px, IPS LCD Display",
+      "Intel Core i3 (13th Gen) 4.5 Ghz, Hexa-Core",
+      "16 GB DDR5 RAM, 512 GB SSD",
+      "Intel UHD GPU",
+      "Fast Charging Support"
+    ],
+    "features": ["Office-ready build", "Backlit keyboard", "Wi-Fi 6 support"],
+    "newPrice": 54990,
+    "oldPrice": 62990,
+    "stars": 4,
+    "reviewsCount": 289,
+    "badge": "Student Choice",
+    "accent": "sage",
+    "delivery": "Free laptop bag and next-day delivery"
+  },
+  {
+    "id": 2,
+    "brand": "Lenovo",
+    "title": "Lenovo IdeaPad Slim 5",
+    "category": "Battery Life",
+    "images": [
+      "https://images.unsplash.com/photo-1517336714739-489689fd1ca8?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "specs": [
+      "14\" (35.56 cm), 1920 x 1200 px, IPS Display",
+      "AMD Ryzen 7 7840HS, Octa-Core",
+      "16 GB LPDDR5X RAM, 1 TB SSD",
+      "AMD Radeon Graphics",
+      "Rapid Charge and 14-hour battery backup"
+    ],
+    "features": ["Slim metal chassis", "Ideal for travel", "Strong thermal balance"],
+    "newPrice": 74990,
+    "oldPrice": 89990,
+    "stars": 5,
+    "reviewsCount": 467,
+    "badge": "Best Battery",
+    "accent": "amber",
+    "delivery": "No-cost EMI and free delivery in 24 hours"
+  },
+  {
+    "id": 3,
+    "brand": "ASUS",
+    "title": "ASUS TUF Gaming F15",
+    "category": "Gaming",
+    "images": [
+      "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1625842268584-8f3296236761?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1611078489935-0cb964de46d6?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "specs": [
+      "15.6\" (39.62 cm), 144 Hz Full HD IPS Display",
+      "Intel Core i7 (13th Gen) 4.9 Ghz, 14-Core",
+      "16 GB DDR5 RAM, 1 TB SSD",
+      "NVIDIA GeForce RTX 4060 8 GB GPU",
+      "90 Wh battery with fast charging"
+    ],
+    "features": ["MUX switch support", "RGB keyboard", "Military-grade durability"],
+    "newPrice": 114990,
+    "oldPrice": 139990,
+    "stars": 5,
+    "reviewsCount": 512,
+    "badge": "Top Rated",
+    "accent": "coral",
+    "delivery": "Exchange bonus and gaming bundle included"
+  },
+  {
+    "id": 4,
+    "brand": "Dell",
+    "title": "Dell Inspiron 14 Plus",
+    "category": "Productivity",
+    "images": [
+      "https://images.unsplash.com/photo-1593642634315-48f5414c3ad9?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "specs": [
+      "14\" (35.56 cm), 2240 x 1400 px, ComfortView Display",
+      "Intel Core Ultra 5, 4.8 Ghz, 12-Core",
+      "16 GB LPDDR5 RAM, 512 GB SSD",
+      "Intel Arc Graphics",
+      "ExpressCharge support"
+    ],
+    "features": ["Premium productivity design", "Sharp webcam", "Great for hybrid work"],
+    "newPrice": 86990,
+    "oldPrice": 99990,
+    "stars": 4,
+    "reviewsCount": 198,
+    "badge": "Workday Favorite",
+    "accent": "sky",
+    "delivery": "Business-day delivery available"
+  },
+  {
+    "id": 5,
+    "brand": "Acer",
+    "title": "Acer Nitro V",
+    "category": "Best Offer",
+    "images": [
+      "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1587614382346-4ec70e388b28?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1611078489935-0cb964de46d6?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "specs": [
+      "15.6\" (39.62 cm), Full HD IPS Display, 165 Hz refresh rate",
+      "AMD Ryzen 5 7640HS, Hexa-Core",
+      "16 GB DDR5 RAM, 512 GB SSD",
+      "NVIDIA GeForce RTX 4050 6 GB GPU",
+      "Fast charging and dual-fan cooling"
+    ],
+    "features": ["Value gaming pick", "Upgradeable memory", "Great offer pricing"],
+    "newPrice": 79990,
+    "oldPrice": 96990,
+    "stars": 4,
+    "reviewsCount": 348,
+    "badge": "Best Offer",
+    "accent": "slate",
+    "delivery": "Bank discount and instant cashback offers"
+  },
+  {
+    "id": 6,
+    "brand": "Apple",
+    "title": "MacBook Air 13",
+    "category": "Highest Rated",
+    "images": [
+      "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "specs": [
+      "13.6\" (34.46 cm), Liquid Retina Display, 2560 x 1664 px",
+      "Apple M3 chip with 8-core CPU",
+      "16 GB unified memory, 512 GB SSD",
+      "Integrated 10-core GPU",
+      "Up to 18 hours battery life with fast charging"
+    ],
+    "features": ["Ultra-light design", "Silent performance", "Strong battery efficiency"],
+    "newPrice": 124900,
+    "oldPrice": 134900,
+    "stars": 5,
+    "reviewsCount": 641,
+    "badge": "Highest Rated",
+    "accent": "rose",
+    "delivery": "Free engraving and express delivery"
+  }
+]
