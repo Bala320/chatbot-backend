@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -22,7 +23,7 @@ public class ConversationCacheService {
     private final RedisTemplate<String, Conversation> redisTemplate;
     private final Duration conversationTtl;
 
-    public ConversationCacheService(
+    public ConversationCacheService(@Qualifier("redisTemplate")
             RedisTemplate<String, Conversation> redisTemplate,
             @Value("${app.cache.conversation-ttl-seconds:604800}") long conversationTtlSeconds) {
         this.redisTemplate = redisTemplate;

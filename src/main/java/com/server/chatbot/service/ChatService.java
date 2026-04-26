@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import com.server.chatbot.dto.ChatResponse;
 import com.server.chatbot.model.Conversation;
 import com.server.chatbot.model.Product;
 
@@ -51,7 +52,7 @@ public class ChatService {
         return oldPref;
     }
 
-    public String handleChat(String sessionId, String message) {
+    public ChatResponse handleChat(String sessionId, String message) {
 
         validateMessage(message);
 
@@ -77,22 +78,21 @@ public class ChatService {
             conversationService.addMessage(conversation, "assistant", reply);
             conversationService.saveConversation(conversation);
 
-            return reply; // 🔥 IMPORTANT: exit early
+            return new ChatResponse(reply, List.of());// 🔥 IMPORTANT: exit early
         }
 
+         // 🔥 3. Extract preferences (AI)
+        UserPreference newPref = openAIService.extractPreferences(message);
+
+        // 🔥 4. Load old preferences
+        UserPreference oldPref = conversation.getPreferences();
+
+        // 🔥 5. Merge
+        UserPreference mergedPref = merge(oldPref, newPref);
+
+        // 🔥 6. Filter products (Java)
+        List<Product> products = productService.search(mergedPref);
         try {
-            // 🔥 3. Extract preferences (AI)
-            UserPreference newPref = openAIService.extractPreferences(message);
-
-            // 🔥 4. Load old preferences
-            UserPreference oldPref = conversation.getPreferences();
-
-            // 🔥 5. Merge
-            UserPreference mergedPref = merge(oldPref, newPref);
-
-            // 🔥 6. Filter products (Java)
-            List<Product> products = productService.search(mergedPref);
-
              // ⚠️ Handle no results
             if (products.isEmpty()) {
                 products = productService.getAllProducts()
@@ -124,8 +124,8 @@ public class ChatService {
         // 10. Save response
         conversationService.addMessage(conversation, "assistant", reply);
         conversationService.saveConversation(conversation);
-
-        return reply;
+        System.out.println("Products size: " + products.size());
+        return new ChatResponse(reply, products);
     }
 
     private boolean isGreeting(String message) {

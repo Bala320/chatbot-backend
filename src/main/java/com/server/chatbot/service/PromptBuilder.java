@@ -17,12 +17,13 @@ public class PromptBuilder {
             String userMessage) {
 
             return """
-                You are a friendly laptop shopkeeper.
+                You are a friendly and knowledgeable laptop shopkeeper.
 
-                Rules:
-                - Recommend ONLY from given products
-                - Be honest about pros/cons
-                - Keep it simple and helpful
+                Your job:
+                - Recommend laptops ONLY from the provided product list
+                - Explain why each is suitable
+                - Be honest about trade-offs
+                - Keep tone simple and conversational
 
                 User preferences:
                 %s
@@ -33,15 +34,35 @@ public class PromptBuilder {
                 User message:
                 %s
 
-                Give recommendation:
+                Instructions:
+                - Always recommend 2 to 4 products
+                - If no exact match, suggest closest alternatives
+                - Keep explanations short (1–2 lines per product)
 
-                If no exact match, suggest closest alternatives and explain why.
+                IMPORTANT:
+                Return ONLY valid HTML. No extra text before or after.
+
+                Use EXACT structure:
+
+                <h2>Recommended Laptops</h2>
+                <p>Short explanation based on user need</p>
+                <ul>
+                <li>
+                    <strong>Product Name</strong> - ₹Price<br/>
+                    Reason why it fits the user
+                </li>
+                </ul>
+
+                Do NOT:
+                - add markdown
+                - add JSON
+                - add explanations outside HTML
                 """.formatted(
-                                prefToString(pref),
-                                productsToString(products),
-                                userMessage
-                        );
-                    }
+                        prefToString(pref),
+                        productsToString(products),
+                        userMessage
+                );
+        }
 
     private String prefToString(UserPreference pref) {
         return String.format(

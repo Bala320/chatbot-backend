@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.server.chatbot.dto.ChatRequest;
+import com.server.chatbot.dto.ChatResponse;
 import com.server.chatbot.model.ChatMessage;
 import com.server.chatbot.model.Conversation;
 import com.server.chatbot.service.ChatService;
@@ -33,7 +34,7 @@ public class ChatController {
     }
 
     @PostMapping
-    public ResponseEntity<String> chat(
+    public ResponseEntity<ChatResponse> chat(
             HttpServletRequest request,
             @RequestBody ChatRequest req) {
 
@@ -42,7 +43,7 @@ public class ChatController {
             throw new ResponseStatusException(UNAUTHORIZED, "Missing authenticated session");
         }
         System.out.println("CHAT_SESSION: " + sessionId);
-        String response = chatService.handleChat(sessionId, req.getMessage());
+        ChatResponse response = chatService.handleChat(sessionId, req.getMessage());
 
         return ResponseEntity.ok(response);
     }
