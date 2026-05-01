@@ -45,6 +45,9 @@ public class SessionService {
     @Value("${app.cookies.secure:false}")
     private boolean secureCookies;
 
+    @Value("${app.cookies.same-site:None}")
+    private String sameSite;
+
     public SessionService(
             TokenService tokenService,
             ConversationRepository conversationRepository,
@@ -123,13 +126,20 @@ public class SessionService {
     private void addCookie(HttpServletResponse response, String name, String value, int maxAgeSeconds) {
         ResponseCookie cookie = ResponseCookie.from(name, value)
                 .httpOnly(true)
-                .secure(true)
-                .sameSite("none")
+                .secure(secureCookies)
+                .sameSite(resolveSameSite())
                 .path("/")
                 .maxAge(maxAgeSeconds)
                 .build();
 
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+    }
+
+    private String resolveSameSite() {
+        if (sameSite == null || sameSite.isBlank()) {
+            return secureCookies ? "None" : "Lax";
+        }
+        return sameSite;
     }
 
     private void initializeConversation(String sessionId) {
