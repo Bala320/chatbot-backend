@@ -1,0 +1,7 @@
+services:
+
+  backend:
+    build: ./chatbot
+    ports:
+      - "8080:8080"
+
