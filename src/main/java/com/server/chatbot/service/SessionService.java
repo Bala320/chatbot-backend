@@ -123,8 +123,8 @@ public class SessionService {
     private void addCookie(HttpServletResponse response, String name, String value, int maxAgeSeconds) {
         ResponseCookie cookie = ResponseCookie.from(name, value)
                 .httpOnly(true)
-                .secure(secureCookies)
-                .sameSite("Lax")
+                .secure(true)
+                .sameSite("none")
                 .path("/")
                 .maxAge(maxAgeSeconds)
                 .build();

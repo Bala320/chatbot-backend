@@ -30,7 +30,7 @@ public class SecurityConfig {
 
     public SecurityConfig(
             JwtFilter jwtFilter,
-            @Value("${app.cors.allowed-origin:http://localhost:5173}") String allowedOrigin) {
+            @Value("${app.cors.allowed-origin:https://chatbot-frontend-lilac-sigma.vercel.app}") String allowedOrigin) {
         this.jwtFilter = jwtFilter;
         this.allowedOrigin = allowedOrigin;
     }
@@ -47,7 +47,7 @@ public class SecurityConfig {
             .exceptionHandling(ex -> ex.authenticationEntryPoint(new HttpStatusEntryPoint(UNAUTHORIZED)))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/session", "/api/refresh").permitAll()
-                .requestMatchers("/api/chat/**").authenticated()
+                .requestMatchers("/api/chat/**", "/api/test-search", "/api/test-extract").authenticated()
                 .anyRequest().permitAll()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
