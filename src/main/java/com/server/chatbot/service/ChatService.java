@@ -70,7 +70,6 @@ public class ChatService {
 
         String reply;
 
-        // ✅ ADD HERE (exact spot)
         if (isGreeting(message)) {
             reply = "Hey! 👋 Looking for a laptop today? Tell me your budget or use case like gaming, coding, etc.";
 
@@ -78,22 +77,22 @@ public class ChatService {
             conversationService.addMessage(conversation, "assistant", reply);
             conversationService.saveConversation(conversation);
 
-            return new ChatResponse(reply, List.of());// 🔥 IMPORTANT: exit early
+            return new ChatResponse(reply, List.of());
         }
 
-         // 🔥 3. Extract preferences (AI)
+         // Extract preferences(AI)
         UserPreference newPref = openAIService.extractPreferences(message);
 
-        // 🔥 4. Load old preferences
+        // Load old preferences
         UserPreference oldPref = conversation.getPreferences();
 
-        // 🔥 5. Merge
+        // Merge
         UserPreference mergedPref = merge(oldPref, newPref);
 
-        // 🔥 6. Filter products (Java)
+        // Filter products (Java)
         List<Product> products = productService.search(mergedPref);
         try {
-             // ⚠️ Handle no results
+             // Handle no results
             if (products.isEmpty()) {
                 products = productService.getAllProducts()
                         .stream()
@@ -101,7 +100,7 @@ public class ChatService {
                         .toList();
             }
 
-            // 🔥 ALWAYS build prompt
+            // ALWAYS build prompt
             String prompt = promptBuilder.buildShopkeeperPrompt(
                     history,
                     mergedPref,
@@ -109,10 +108,10 @@ public class ChatService {
                     message
             );
 
-            // 🔥 ALWAYS call LLM
+            // ALWAYS call LLM
             reply = openAIService.callLLM(prompt);
 
-            // 🔥 9. Save preferences
+            // Save preferences
             conversation.setPreferences(mergedPref);
 
         } catch (Exception e) {
