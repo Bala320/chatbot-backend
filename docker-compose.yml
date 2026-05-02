@@ -5,4 +5,7 @@ services:
       - "8080:8080"
     env_file:
       - .env
+    restart: always
+    environment:
+      - JAVA_OPTS=-Xmx512m -Xms256m
 
